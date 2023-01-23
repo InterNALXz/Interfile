@@ -11,7 +11,7 @@ HS_PATH = $(FILE_PATH)/../hyperscan/lib
 
 INLUDE_PATH+=$(HS_PATH)/../src $(FILE_PATH)/../src
 
-C_FLAGS := -O0 -g
+C_FLAGS := -O0 -g -DUNIT_TEST_I
 
 PRE_DEF := -DPCRE2_CODE_UNIT_WIDTH=8
 
@@ -27,10 +27,10 @@ TARGET := interfile
 GCC:= gcc
 
 %.o:%.c
-	$(GCC) $(I_FLAGS) -c $^
+	$(GCC) $(I_FLAGS) $(C_FLAGS) -c $^
 
 all:$(OBJS)
-	$(GCC) $(LIB_FLAGS) $(C_FLAGS) $^ $(LIB_IN) -o $(TARGET)
+	$(GCC) $(LIB_FLAGS) $^ $(LIB_IN) -o $(TARGET)
 
 clean:
 	rm -rf *.o $(TARGET)

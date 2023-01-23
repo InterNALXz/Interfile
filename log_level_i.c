@@ -20,6 +20,12 @@ type_i log_level_map[] = {
 	{6, NULL, 0},
 };
 
+void ChangeLogLevel(int ll) {
+	if (ll >= LOG_MAX) 
+		return;
+
+	g_log_level = ll;
+}
 
 int ILOGOUT(int l, const char *file, const int line, 
 	const char *func, const char *err_str, const char *fmt, ...) {

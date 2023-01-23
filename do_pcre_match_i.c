@@ -2,8 +2,10 @@
 #include "log_level_i.h"
 #include "do_pcre_match_i.h"
 #include "pcre2.h"
+#include "string.h"
+#include "unit_test_i.h"
 
-#define PCRE_PARSE_FUNCTION "^\\s*[A-z0-9]+\\s+[A-z0-9]*\\s*[A-z0-9]*$"
+#define PCRE_PARSE_FUNCTION "^\\s*([A-z0-9]+)\\s+([A-z0-9]+)\\s*([A-z0-9]*)\\s*([A-z0-9]*)$"
 static pcre2_code *parse_regex = NULL;
 pcre2_match_context *context = NULL;
 static pcre2_match_data *parse_regex_study = NULL;
@@ -37,3 +39,37 @@ void so_pcre_deinit(void) {
 
     return;
 }
+
+#ifdef UNIT_TEST_I
+void unit_pcre_match01(void) {
+    char *a = "1 0 EXCEL 5";
+    size_t pcre2_len;
+    const char *bytes_str = NULL;
+    int en = 0;
+
+    int pcre_rc = pcre2_match(parse_regex, (PCRE2_SPTR8)a, strlen(a), 0, 0,
+            parse_regex_study, NULL);
+
+    ILOGDEBUG("n is %d", pcre_rc);
+
+    if (pcre_rc >= 3) {
+        if (pcre2_substring_get_bynumber(
+                    parse_regex_study, 1, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
+            ILOGDEBUG("bytes is %s", bytes_str);
+        }
+
+        if (pcre2_substring_get_bynumber(
+                    parse_regex_study, 2, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
+            ILOGDEBUG("bytes is %s", bytes_str);
+        }
+        if (pcre2_substring_get_bynumber(
+                    parse_regex_study, 3, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
+            ILOGDEBUG("bytes is %s", bytes_str);
+        }
+        if (pcre2_substring_get_bynumber(
+                    parse_regex_study, 4, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
+            ILOGDEBUG("bytes is %s", bytes_str);
+        }
+    }
+}
+#endif
