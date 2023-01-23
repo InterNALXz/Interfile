@@ -13,20 +13,24 @@ INLUDE_PATH+=$(HS_PATH)/../src $(FILE_PATH)/../src
 
 C_FLAGS := -O0 -g
 
-LIB_IN := -lhs -Wl,-rpath=$(HS_PATH)  -lmagic -lpcre
-LIB_L := $(FILE_PATH) $(HS_PATH) /usr/lib/x86_64-linux-gnu/
+PRE_DEF := -DPCRE2_CODE_UNIT_WIDTH=8
+
+LIB_IN :=  -lmagic -lpcre2-8 -lhs -Wl,-rpath=$(HS_PATH) -lstdc++ -std=c99 -lm
+LIB_L := $(FILE_PATH) $(HS_PATH) 
 LIB_FLAGS:=$(patsubst %,-L%,$(LIB_L))
 I_FLAGS:=$(patsubst %,-I%,$(INLUDE_PATH))
+
+I_FLAGS += $(PRE_DEF)
 
 TARGET := interfile
 
 GCC:= gcc
 
 %.o:%.c
-	$(GCC) $(I_FLAGS) -c $^
+	$(GCC) $(I_FLAGS) $(C_FLAGS) -c $^
 
 all:$(OBJS)
-	$(GCC) $(LIB_FLAGS) $(C_FLAGS)  $(I_FLAGS) $(LIB_IN) $^ -o $(TARGET)
+	$(GCC) $(LIB_FLAGS) $^ $(LIB_IN) -o $(TARGET)
 
 clean:
 	rm -rf *.o $(TARGET)

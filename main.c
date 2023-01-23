@@ -19,9 +19,12 @@ int Get_Cpath_Lenth(void) {
 
 int main(int argc, const char *argv[]) {
 	Get_Cpath();
-
-	parse_args(argv, argc);
 	so_pcre_init();
+
+	int ret = parse_args(argv, argc);
+	if (ret < 0)
+		return ret;
+
 	file_thread(0);
 	so_pcre_deinit();
     return 0;
