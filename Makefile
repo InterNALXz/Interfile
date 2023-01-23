@@ -13,8 +13,8 @@ INLUDE_PATH+=$(HS_PATH)/../src $(FILE_PATH)/../src
 
 C_FLAGS := -O0 -g
 
-LIB_IN := -lhs -Wl,-rpath=$(HS_PATH)  -lmagic
-LIB_L := $(FILE_PATH) $(HS_PATH)
+LIB_IN := -lhs -Wl,-rpath=$(HS_PATH)  -lmagic -lpcre
+LIB_L := $(FILE_PATH) $(HS_PATH) /usr/lib/x86_64-linux-gnu/
 LIB_FLAGS:=$(patsubst %,-L%,$(LIB_L))
 I_FLAGS:=$(patsubst %,-I%,$(INLUDE_PATH))
 
