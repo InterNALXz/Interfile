@@ -1,6 +1,7 @@
 /* just do job */
 #include "file_i.h"
 #include "manuse.h"
+#include "do_pcre_match_i.h"
 
 #define MAX_PATH 512
 
@@ -20,6 +21,8 @@ int main(int argc, const char *argv[]) {
 	Get_Cpath();
 
 	parse_args(argv, argc);
+	so_pcre_init();
 	file_thread(0);
+	so_pcre_deinit();
     return 0;
 }

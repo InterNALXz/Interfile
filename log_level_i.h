@@ -12,6 +12,7 @@ LOG_ERROR,
 enum {
 ERROR_NONE,
 ERROR_OPT_USAGE,
+ERROR_ALLOC_ERR,
 ERROR_MAX,
 };
 
@@ -23,9 +24,3 @@ int ILOGOUT(int l, const char *file, const int line,
 
 #define ILOGDERR(ecode, ...) ILOGOUT(LOG_ERROR, __FILE__, \
 	__LINE__, __FUNCTION__, #ecode, __VA_ARGS__)
-
-typedef struct type_s_i {
-	int level;
-	const char *name;
-	unsigned long long policy; 
-}type_i;
