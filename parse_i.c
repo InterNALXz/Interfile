@@ -67,8 +67,9 @@ int parse_args(const char **argv, int argc) {
 				arg_count--;
 				break;
 			case 't':
-				#define UNIT_TEST_I 1
+#ifdef UNIT_TEST_I
 				unit_test_all_i();
+#endif
 				break;
 			default:
 				ret = -1;

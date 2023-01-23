@@ -11,11 +11,11 @@ HS_PATH = $(FILE_PATH)/../hyperscan/lib
 
 INLUDE_PATH+=$(HS_PATH)/../src $(FILE_PATH)/../src
 
-C_FLAGS := -O0 -g -DUNIT_TEST_I
+C_FLAGS := -O0 -g
 
 PRE_DEF := -DPCRE2_CODE_UNIT_WIDTH=8
 
-LIB_IN :=  -lmagic -lpcre2-8 -lhs -Wl,-rpath=$(HS_PATH) 
+LIB_IN :=  -lmagic -lpcre2-8 -lhs -Wl,-rpath=$(HS_PATH) -lstdc++ -std=c99 -lm
 LIB_L := $(FILE_PATH) $(HS_PATH) 
 LIB_FLAGS:=$(patsubst %,-L%,$(LIB_L))
 I_FLAGS:=$(patsubst %,-I%,$(INLUDE_PATH))

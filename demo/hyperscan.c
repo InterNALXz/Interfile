@@ -59,15 +59,19 @@ static int BuildMUlitDateBase(SCtx *sctx, int len) {
 	}
 
 	int nocase = 0;
-	unsigned flags = nocase ? HS_FLAG_CASELESS : 0;
+	unsigned int flags[5] = {0};
+	for(int i = 0;i<5;i++) {
+	 	flags[i] = HS_FLAG_SINGLEMATCH;
+		flags[i] |= nocase ? HS_FLAG_CASELESS : 0;
+	}
 
     hs_database_t *db = NULL;
     hs_compile_error_t *compile_err = NULL;
-    hs_error_t err = hs_compile_ext_multi(cas.exp, flags, cas.ids, NULL, 5, HS_MODE_BLOCK, NULL, &db,
+    hs_error_t err = hs_compile_ext_multi((const char *const *)cas.exp, flags, cas.ids, NULL, 5, HS_MODE_BLOCK, NULL, &db,
                                 &compile_err);
 								
 	if (err != 0){
-		printf("Build Error\n");
+		printf("Build Error, Error:{%s}\n", compile_err->message);
 		return -1;
 	}
 
@@ -83,6 +87,7 @@ static int BuildMUlitDateBase(SCtx *sctx, int len) {
 	}
 	sctx->db = db;
 	sctx->scratch = scratch;
+	return 0;
 }
 
 static int MatchEvent(unsigned int id, unsigned long long from,
