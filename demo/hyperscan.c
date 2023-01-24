@@ -26,6 +26,24 @@ typedef struct ContentData{
 	int *ids;
 }CD;
 
+void CDFreeT(CD *kitty, int flag) {
+	if (kitty->exp) {
+		if (flag & 1) {
+			for(int i = 0;i<5;i++) {
+				free(kitty->exp[i]);
+			}
+		}
+
+		free(kitty->exp);
+	}
+
+	if (kitty->ids)
+		free(kitty->ids);
+
+	if (flag & 2)
+		free(kitty);
+}
+
 /*       convert str to regrex          */
 char *HSRenderPattern(const uint8_t *pat, uint16_t pat_len)
 {
@@ -87,6 +105,7 @@ static int BuildMUlitDateBase(SCtx *sctx, int len) {
 	}
 	sctx->db = db;
 	sctx->scratch = scratch;
+	CDFreeT(&cas, 0);
 	return 0;
 }
 

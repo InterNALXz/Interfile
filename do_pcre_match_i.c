@@ -37,6 +37,10 @@ void so_pcre_deinit(void) {
     if (parse_regex_study)
         pcre2_match_data_free(parse_regex_study);
 
+    if (context) {
+        pcre2_match_context_free(context);
+    }
+
     return;
 }
 
@@ -44,32 +48,47 @@ void so_pcre_deinit(void) {
 void unit_pcre_match01(void) {
     char *a = "1 0 EXCEL 5";
     size_t pcre2_len;
-    const char *bytes_str = NULL;
+    char *bytes_str = NULL;
     int en = 0;
+    so_pcre_init();
 
     int pcre_rc = pcre2_match(parse_regex, (PCRE2_SPTR8)a, strlen(a), 0, 0,
             parse_regex_study, NULL);
 
     ILOGDEBUG("n is %d", pcre_rc);
 
-    if (pcre_rc >= 3) {
+    if (pcre_rc >= 4) {
         if (pcre2_substring_get_bynumber(
                     parse_regex_study, 1, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
-            ILOGDEBUG("bytes is %s", bytes_str);
-        }
+            ILOGNOTICE("bytes is %s", bytes_str);
+            pcre2_substring_free(bytes_str);
+        } else 
+            return;
 
         if (pcre2_substring_get_bynumber(
                     parse_regex_study, 2, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
-            ILOGDEBUG("bytes is %s", bytes_str);
-        }
+            ILOGNOTICE("bytes is %s", bytes_str);
+            pcre2_substring_free(bytes_str);
+        } else 
+            return;
+
         if (pcre2_substring_get_bynumber(
                     parse_regex_study, 3, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
-            ILOGDEBUG("bytes is %s", bytes_str);
-        }
+            ILOGNOTICE("bytes is %s", bytes_str);
+            pcre2_substring_free(bytes_str);
+        } else 
+            return;
+
+        
         if (pcre2_substring_get_bynumber(
                     parse_regex_study, 4, (PCRE2_UCHAR8 **)&bytes_str, &pcre2_len) == 0) {
-            ILOGDEBUG("bytes is %s", bytes_str);
-        }
+            ILOGNOTICE("bytes is %s", bytes_str);
+            pcre2_substring_free(bytes_str);
+        } else 
+            return;
+
+        ILOGNOTICE("pass unit_pcre_match01");
     }
+    so_pcre_deinit();
 }
 #endif
