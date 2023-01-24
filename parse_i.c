@@ -70,6 +70,7 @@ int parse_args(const char **argv, int argc) {
 #ifdef UNIT_TEST_I
 				unit_test_all_i();
 #endif
+				return -1;
 				break;
 			default:
 				ret = -1;

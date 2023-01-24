@@ -58,7 +58,7 @@ int ILOGOUT(int l, const char *file, const int line,
 	}
 
 	if (err_str != NULL)
-		fprintf(stderr, "\033[0;32;31m""Error""\033[m"":[""\033[0;35m""%s""\033[m""] In %s =%s= ---> %d <%s>\n", err_str, file_name, func, line, msg_i);
+		fprintf(stderr, "\033[0;32;31m""%s""\033[m"":[""\033[0;35m""%s""\033[m""] In %s =%s= ---> %d <%s>\n", log_level_map[l].name, err_str, file_name, func, line, msg_i);
 	else
 		fprintf(stdout, "Log [""\033[0;35m""%s""\033[m""] In %s =%s= ---> %d : <%s>\n", log_level_map[l].name, file_name, func, line, msg_i);
 

@@ -3,5 +3,6 @@
 
 void unit_test_all_i(void){
     unit_pcre_match01();
+    unit_strring_match01();
 }
 #endif
