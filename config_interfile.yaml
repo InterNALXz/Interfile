@@ -1,0 +1,44 @@
+%YAML 1.1
+---
+
+# interfile configure
+
+connection:
+  #for control terminal connection configure
+  protocol: udp
+  #tcp/udp
+
+  #if tcp configure ip and port
+  #ip: 127.0.0.1
+  #port: 8000
+
+file:
+  #for file configure
+  type: mp3,mp4,excel,word,ppt,zip,pdf
+  - mp3:
+    writeable: yes
+    #convert mp3 to other format
+    convert:
+      enable: yes
+      format: wav
+      #lame/ffmpeg
+      tools: lame
+
+  - mp4:
+    writeable: yes
+
+  - excel:
+    writeable: yes
+
+  - word:
+    writeable: yes
+
+  - ppt:
+    writeable: yes
+
+  - zip:
+    unzip: no
+
+  - pdf:
+    readable: yes
+  

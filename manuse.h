@@ -13,6 +13,12 @@ typedef struct type_s_i {
 #define I_FREE(a) if ((a)) \
 	free((a));
 
+typedef struct infile_ {
+	const char *conf_name;
+	void *thim_head;
+	void *icox;
+}infile;
+
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;

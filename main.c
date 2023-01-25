@@ -22,9 +22,14 @@ int Get_Cpath_Lenth(void) {
 int main(int argc, const char *argv[]) {
 	Get_Cpath();
 
-	int ret = parse_args(argv, argc);
+	infile inf_main = {0};
+
+	int ret = parse_args(argv, argc, &inf_main);
 	if (ret < 0)
 		return ret;
+
+	YamlFileNodeInit();
+	parse_yaml_file(inf_main.conf_name);
 	
 	so_pcre_init();
 
