@@ -3,12 +3,13 @@
 #include "manuse.h"
 #include "do_pcre_match_i.h"
 #include "do_string_i.h"
+#include "thread_i.h"
 
 #define MAX_PATH 512
 
 static char current_path[MAX_PATH] = {0};
 
-static int Get_Cpath(void) {
+static void Get_Cpath(void) {
 	getcwd(current_path, sizeof(current_path));
 
 	ILOGDEBUG("path is %s", current_path);
@@ -27,11 +28,17 @@ int main(int argc, const char *argv[]) {
 	
 	so_pcre_init();
 
+	iThreadM *main_ti = IMThreadCreate("control terminal", 0);
+	if (main_ti == NULL) {
+		ILOGDERR(ERROR_THREAD, "control terminal not start");
+	}
+
 	ICotx *icx = calloc(1, sizeof(ICotx));
 
 	HyperStringInit(icx);
 
 	file_thread(0);
+	IMThreadDestroyAll(main_ti);
 	HyperStringDeinit(icx);
 
 	free(icx);
