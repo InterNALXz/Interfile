@@ -48,5 +48,6 @@ int main(int argc, const char *argv[]) {
 
 	free(icx);
 	so_pcre_deinit();
+	YamlFileNodeDeInit();
     return 0;
 }

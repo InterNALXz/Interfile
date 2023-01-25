@@ -132,7 +132,7 @@ static int deal_node_parse(yaml_parser_t *ypar, YamlNode *i_root) {
 				over = 1;
 				break;
 			case YAML_DOCUMENT_START_EVENT:
-				break;
+				goto next;
 			case YAML_DOCUMENT_END_EVENT:
 				over = 1;
 				break;
@@ -153,7 +153,7 @@ static int deal_node_parse(yaml_parser_t *ypar, YamlNode *i_root) {
 			
 			case YAML_SEQUENCE_END_EVENT:
 				over = 1;
-				break;
+				goto next;
 			case YAML_MAPPING_START_EVENT: 
 				if (deal_node_parse(ypar, i_root) != 0) {
 					return -1;
@@ -162,7 +162,7 @@ static int deal_node_parse(yaml_parser_t *ypar, YamlNode *i_root) {
 			
 			case YAML_MAPPING_END_EVENT:
 				over = 1;
-				break;
+				goto next;
 			default:
 				break;
 

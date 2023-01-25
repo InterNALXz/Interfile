@@ -14,7 +14,7 @@ connection:
 
 file:
   #for file configure
-  type: mp3,mp4,excel,word,ppt,zip,pdf
+  type:
   - mp3:
     writeable: yes
     #convert mp3 to other format
