@@ -48,8 +48,7 @@ void so_pcre_deinit(void) {
 void unit_pcre_match01(void) {
     char *a = "1 0 EXCEL 5";
     size_t pcre2_len;
-    char *bytes_str = NULL;
-    int en = 0;
+    unsigned char *bytes_str = NULL;
     so_pcre_init();
 
     int pcre_rc = pcre2_match(parse_regex, (PCRE2_SPTR8)a, strlen(a), 0, 0,

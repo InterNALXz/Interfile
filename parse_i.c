@@ -81,7 +81,7 @@ int parse_args(const char **argv, int argc) {
 		arg_count--;
 	} while(arg_count > 0);
 
-	return 0;
+	return ret;
 	
 }
 

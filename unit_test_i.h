@@ -5,5 +5,6 @@
 void unit_pcre_match01(void);
 void unit_test_all_i(void);
 void unit_strring_match01(void);
+void IMThreadTest01(void);
 #endif
 #endif

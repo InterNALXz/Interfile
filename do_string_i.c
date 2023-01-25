@@ -15,7 +15,7 @@ typedef struct ContentData{
     int *flags;
 }CoD;
 
-void NoUseFreeI(CoD *kitty, int flag) {
+static void NoUseFreeI(CoD *kitty, int flag) {
 	if (kitty->exp) {
 		if (flag & 1) {
 			for(int i = 0;i < g_string_sizei;i++) {
@@ -35,7 +35,7 @@ void NoUseFreeI(CoD *kitty, int flag) {
 }
 
 /*       convert str to regrex          */
-char *HSRenderPattern(const uint8_t *pat, uint16_t pat_len)
+static char *HSRenderPattern(const char *pat, uint16_t pat_len)
 {
     if (pat == NULL) {
         return NULL;
@@ -84,7 +84,9 @@ CoD *BuildHSDataBase(void) {
         }
 
         cd->flags[i] = HS_FLAG_SINGLEMATCH;
-        cd->flags[i] |= HS_FLAG_CASELESS;
+
+        if (string_i[i].policy & STRING_HYPER_NOCASE)
+            cd->flags[i] |= HS_FLAG_CASELESS;
 	}
 
 out:
@@ -109,7 +111,7 @@ int HyperStringInit(ICotx *icnox) {
 
     hs_database_t *db = NULL;
     hs_compile_error_t *compile_err = NULL;
-    hs_error_t err = hs_compile_ext_multi((const char *const *)inx->exp, inx->flags, inx->ids, NULL, g_string_sizei, HS_MODE_BLOCK, NULL, &db,
+    hs_error_t err = hs_compile_ext_multi((const char *const *)inx->exp, (const unsigned int *)inx->flags, (const unsigned int *)inx->ids, NULL, g_string_sizei, HS_MODE_BLOCK, NULL, &db,
                                 &compile_err);
 								
 	if (err != 0){
@@ -141,9 +143,15 @@ out:
 }
 
 int HyperStringDeinit(ICotx *icnox) {
+    if (icnox == NULL) {
+        return -1;
+    }
+
 	hs_free_scratch(icnox->scratch);
 
 	hs_free_database(icnox->db);
+
+    return 0;
 }
 
 static int MatchEvent(unsigned int id, unsigned long long from,
@@ -153,7 +161,7 @@ static int MatchEvent(unsigned int id, unsigned long long from,
 	return 0;
 }
 
-static int HSScan(ICotx *icnox, const char *haystack, int haystack_len) {
+static int HSiScan(ICotx *icnox, const char *haystack, int haystack_len) {
 	uint64_t match_offset = 0;
     hs_error_t err = hs_scan(icnox->db, (const char *)haystack, haystack_len, 0,
                              icnox->scratch, MatchEvent, &match_offset);
@@ -173,9 +181,9 @@ static int HSScan(ICotx *icnox, const char *haystack, int haystack_len) {
 void unit_strring_match01(void) {
     ICotx icnox = {0};
     HyperStringInit(&icnox);
-    HSScan(&icnox, TEST_STRING01, strlen(TEST_STRING01));
-    HSScan(&icnox, TEST_STRING02, strlen(TEST_STRING02));
-    HSScan(&icnox, TEST_STRING03, strlen(TEST_STRING03));
+    HSiScan(&icnox, TEST_STRING01, strlen(TEST_STRING01));
+    HSiScan(&icnox, TEST_STRING02, strlen(TEST_STRING02));
+    HSiScan(&icnox, TEST_STRING03, strlen(TEST_STRING03));
     HyperStringDeinit(&icnox);
 }
 #endif

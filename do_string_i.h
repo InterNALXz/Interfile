@@ -8,6 +8,8 @@ typedef struct HSTX {
 	hs_scratch_t *scratch;
 }ICotx;
 
+#define STRING_HYPER_NOCASE 1<<0
+
 int HyperStringInit(ICotx *icnox);
 int HyperStringDeinit(ICotx *icnox);
 #endif
