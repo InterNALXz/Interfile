@@ -58,7 +58,8 @@ static char *HSRenderPattern(const char *pat, uint16_t pat_len)
     return str;
 }
 
-CoD *BuildHSDataBase(void) {
+//build a mulit hs base
+static CoD *BuildHSDataBase(void) {
     CoD *cd = calloc(1, sizeof(CoD));
 
     if (cd == NULL) {
@@ -154,6 +155,7 @@ int HyperStringDeinit(ICotx *icnox) {
     return 0;
 }
 
+//do a job for this match; maybe need a funciton array match every thing
 static int MatchEvent(unsigned int id, unsigned long long from,
                       unsigned long long to, unsigned int flags, void *context)
 {

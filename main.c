@@ -24,6 +24,7 @@ int main(int argc, const char *argv[]) {
 
 	infile inf_main = {0};
 
+// do init thing need a function wrapper
 	int ret = parse_args(argv, argc, &inf_main);
 	if (ret < 0)
 		return ret;
@@ -43,6 +44,8 @@ int main(int argc, const char *argv[]) {
 	HyperStringInit(icx);
 
 	file_thread(0);
+
+// do deinit thing
 	IMThreadDestroyAll(main_ti);
 	HyperStringDeinit(icx);
 

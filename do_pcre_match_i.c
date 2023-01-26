@@ -26,7 +26,7 @@ void so_pcre_init(void) {
         ILOGDERR(ERROR_ALLOC_ERR, "pcre error!");
         return;
     }
-// todo:if we want to free more pcre,we could add it in list
+// TODO:if we want to free more pcre,we could add it in list
     return;
 }
 

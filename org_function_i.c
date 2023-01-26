@@ -7,6 +7,7 @@ static modfun mf_i[] = {0};
 
 static int mf_count = 0;
 
+// TODO: register also need unregister
 int RegisterIFun(const char *name, void *(*fun)(void *), int flag) {
     if (name == NULL || fun == NULL) {
         ILOGDERR(ERROR_WRONG_ARG, "register inter function error");

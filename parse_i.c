@@ -113,6 +113,7 @@ void YamlFileNodeDeInit(void) {
 	I_FREE(i_root);
 }
 
+// for yaml parse; but get some problem, need modify
 static int deal_node_parse(yaml_parser_t *ypar, YamlNode *i_root) {
 	yaml_event_t yeve = {0};
 

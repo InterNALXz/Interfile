@@ -16,7 +16,7 @@ int file_thread(int port) {
 
 static int expend_thread_size = 115200;
 
-// todo: other inti function list
+// TODO: other inti function list
 ThrFucN *ThreadFuncInit(void) {
 	ThrFucN *th = calloc(1, sizeof(ThrFucN));
 	if (th == NULL) {
@@ -34,7 +34,7 @@ int ThreadFunAdd(ThrFucN *head) {
 
 	return 0;
 }
-// end todo
+// end TODO
 
 iThreadM *IMThreadCreate(const char *name, int flag) {
 	if (name == NULL)
